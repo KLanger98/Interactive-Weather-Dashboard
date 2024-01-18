@@ -6,6 +6,7 @@
     <title>Weather Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./Assets/styles.css">
 </head>
 <body>
     <header>
@@ -16,39 +17,42 @@
         <h2>Search for a City here:</h2>
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="City Name" aria-label="City Name"
-                aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+                aria-describedby="button-addon2" id="searchInput">
+            <button class="btn btn-outline-secondary" type="button" id="searchBtn">Search</button>
         </div>
     </div>
     <!-- List of previously searched cities, max of 8 -->
     <div>
-        <div class="list-group">
-            <a href="#tab" class="list-group-item list-group-item-action active" aria-current="true">
+        <div class="list-group" id="previousSearches">
+            <!-- <a href="#tab" class="list-group-item list-group-item-action active" aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
+                    <h5 class="mb-1">Adelaide</h5>
                     <small>3 days ago</small>
                 </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small>And some small print.</small>
+                <p class="mb-1">Current Temperature</p>
+                <small class="text-body-secondary" id="weatherDescription">Weather Description</small>
             </a>
             <a href="#tab" class="list-group-item list-group-item-action" aria-current=""true>
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
+                    <h5 class="mb-1">Melbourne</h5>
                     <small class="text-body-secondary">3 days ago</small>
                 </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
+                <p class="mb-1">Current Temperature</p>
+                <small class="text-body-secondary" id="weatherDescription">Weather Description</small>
             </a>
             <a href="#tab" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
+                    <h5 class="mb-1">Sydney</h5>
                     <small class="text-body-secondary">3 days ago</small>
                 </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
+                <p class="mb-1">Current Temperature</p>
+                <small class="text-body-secondary" id="weatherDescription">Weather Description</small>
+            </a> -->
         </div>
     </div>
+    <div id="mainContainer"></div>
+    <!-- Dayjs -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -56,6 +60,8 @@
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
+    <!-- My script -->
+    <script src="./Assets/script.js"></script>
         
 </body>
 </html>
