@@ -13,7 +13,7 @@
         <h1>Weather Dashboard</h1>
     </header>
     <!-- Search box to search for a city  -->
-    <div>
+    <div class="container-l p-4" id="searchBar">
         <h2>Search for a City here:</h2>
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="City Name" aria-label="City Name"
@@ -22,35 +22,14 @@
         </div>
     </div>
     <!-- List of previously searched cities, max of 8 -->
-    <div>
-        <div class="list-group" id="previousSearches">
-            <!-- <a href="#tab" class="list-group-item list-group-item-action active" aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Adelaide</h5>
-                    <small>3 days ago</small>
-                </div>
-                <p class="mb-1">Current Temperature</p>
-                <small class="text-body-secondary" id="weatherDescription">Weather Description</small>
-            </a>
-            <a href="#tab" class="list-group-item list-group-item-action" aria-current=""true>
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Melbourne</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Current Temperature</p>
-                <small class="text-body-secondary" id="weatherDescription">Weather Description</small>
-            </a>
-            <a href="#tab" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Sydney</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Current Temperature</p>
-                <small class="text-body-secondary" id="weatherDescription">Weather Description</small>
-            </a> -->
+    <div class="m-4">
+        <div class="row">
+            <div class="col-md-2 col-sm-10 ms-8 list-group" id="previousSearches">
+            </div>
+            <div class="col-md-10 col-sm-11 row" id="mainContainer"></div>
         </div>
     </div>
-    <div id="mainContainer"></div>
+    
     <!-- Dayjs -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <!-- Bootstrap JS -->

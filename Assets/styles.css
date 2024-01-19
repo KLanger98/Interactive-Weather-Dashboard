@@ -1,13 +1,24 @@
 header{
-    background-color: #F58549;
+    background-color: #00296b;
     height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 8px solid white;
 }
 header > h1{
-    color: #772F1A;
+    color: #fdc500;
 }
 body{
-    background-color: #C9A55D;
+    background-color: #00509d;
+}
+
+#searchBar{
+    background-color: #ffd500;
+    border-bottom: 8px solid white
+}
+
+#searchBtn{
+    background-color: #00296B;
+    color: white;
 }
