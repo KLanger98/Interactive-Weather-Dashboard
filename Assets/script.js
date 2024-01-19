@@ -59,13 +59,16 @@ function runSearch(){
 }
 
 function loadPreviousSearches(){
+    //Check if previous data exists within local Storage
     let previousSearches = JSON.parse(localStorage.getItem('previousSearches'));
 
-
+    //If not, create default previous searches
     if(!previousSearches){
         previousSearches=["Adelaide", "Melbourne", "Sydney", "Perth", "Hobart", "Brisbane", "Darwin"]
         localStorage.setItem("previousSearches", JSON.stringify(previousSearches))
     }
+
+    //Load all previous search list group
     let prevSearchDiv = $('#previousSearches');
     prevSearchDiv.empty();
 
@@ -82,6 +85,7 @@ function loadPreviousSearches(){
         let smallText = $('<small>').addClass('text-body-secondary').attr('id', 'weatherDescription').css('color', 'white');
         let heading = $('<h5>').text(previousSearches[i]);
 
+        //Add onclick event which clears active class and reassigns selected search the active class
         anchor.on('click', changeActive)
 
         anchor.append(body, p, smallText);
@@ -89,14 +93,33 @@ function loadPreviousSearches(){
 
         prevSearchDiv.append(anchor);
     }
-
-    loadPreviousSearchesData()
+    //Trigger fetch of data to reload into previous search elements 
+    loadPreviousSearchesData();
 }
 
+//Fetch temperature data for previous search list to display
+function loadPreviousSearchesData(){
+    $('#previousSearches a').each(function(){
+        let cityName = $(this).find('h5').text();
+
+        weatherDataFetch(cityName, "current")
+            .then(data =>{
+                let currentTempText = $(this).find('p');
+                currentTempText.text(data.main.temp + "°C")
+
+                let tempDesc = $(this).find('#weatherDescription');
+                tempDesc.text(data.weather[0].description)
+            })
+            .catch(error =>{
+                console.error("Error", error)
+            })
+    })
+}
+
+//Remove active class from all list items and add new active class to selection
 function changeActive(event){
     let anchorBoxes = $('a');
 
-    console.log(anchorBoxes);
     for(let i = 0; i < anchorBoxes.length; i++){
         if($(anchorBoxes[i]).hasClass("active")){
             $(anchorBoxes[i]).removeClass('active');
@@ -104,12 +127,8 @@ function changeActive(event){
     }
 
     let clickedBox = $(event.target).closest('a');
-
-    console.log(clickedBox)
-
     $(clickedBox).addClass('active');
 
-    
     $('#mainContainer').empty();
     loadMainBoard();
 }
@@ -122,10 +141,6 @@ function loadMainBoard(){
     weatherDataFetch(currentSearch, "current")
         .then(data =>{
         console.log(data)
-                //Get current weather data for selected city
-
-        
-
         //Load today's weather 
         let mainHeading = $('<h2>').text(currentSearch).css("color", "white");
         mainContainer.append(mainHeading);
@@ -159,8 +174,6 @@ function loadMainBoard(){
         headerCard.append(smallHeading);
         bodyCard.append(mainTemps, otherInfo);
         mainContainer.append(mainCard)
-
-
         })
         .catch(error =>{
             console.error("Error", error)
@@ -212,29 +225,7 @@ function loadMainBoard(){
 
 }
 
-function loadPreviousSearchesData(){
 
-
-    $('#previousSearches a').each(function(){
-        let cityName = $(this).find('h5').text();
-
-        weatherDataFetch(cityName, "current")
-            .then(data =>{
-                let currentTempText = $(this).find('p');
-                currentTempText.text(data.main.temp + "°C")
-
-                let tempDesc = $(this).find('#weatherDescription');
-                tempDesc.text(data.weather[0].description)
-            })
-            .catch(error =>{
-                console.error("Error", error)
-            })
-    })
-
-
-
-
-}
 
 function weatherDataFetch(cityName, day){
 
@@ -280,7 +271,6 @@ function weatherDataFetch(cityName, day){
                 })
             }
         })
-        
         .catch(error => {
             console.error("error", error)
             throw error;
@@ -307,8 +297,6 @@ function coordinatesFetch(cityName){
         })
     
 }
-
-
 
 loadPreviousSearches()
 loadMainBoard();
