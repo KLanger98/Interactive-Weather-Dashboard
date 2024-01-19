@@ -119,8 +119,8 @@ function loadPreviousSearchesData(){
 //Remove active class from all list items and add new active class to selection
 function changeActive(event){
     let anchorBoxes = $('a');
-
     for(let i = 0; i < anchorBoxes.length; i++){
+        $(anchorBoxes[i]).off('click');
         if($(anchorBoxes[i]).hasClass("active")){
             $(anchorBoxes[i]).removeClass('active');
         }
