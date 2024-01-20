@@ -187,7 +187,7 @@ function loadMainBoard(){
         }
         let timeStamps = [3 ,11, 19, 27, 35];
         for(let i = 0; i < 5; i++){
-            let iconUrl = "http://openweathermap.org/img/w/" + data.list[timeStamps[i]].weather[0].icon + ".png";
+            let iconUrl = "https://openweathermap.org/img/w/" + data.list[timeStamps[i]].weather[0].icon + ".png";
             let date = data.list[i].dt;
 
             $('#forecast-' + i + "-icon").attr('src', iconUrl);
@@ -265,7 +265,7 @@ function weatherDataFetch(cityName, day){
 
 //Fetch the name of the city 
 function coordinatesFetch(cityName){
-    let apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=5&appid=6b83faa0314e5970068d0ef9b2e007ee";
+    let apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=5&appid=6b83faa0314e5970068d0ef9b2e007ee";
 
     return fetch(apiUrl)
         .then(response =>{
