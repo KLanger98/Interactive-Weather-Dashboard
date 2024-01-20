@@ -1,4 +1,5 @@
 const weatherAPI = "6b83faa0314e5970068d0ef9b2e007ee"
+let dataFetching = false;
 
 
 //Create event listeners for submission and enter keypress
@@ -11,6 +12,7 @@ $('#searchInput').on('keypress', function(event){
 
 //Create a function that checks the validity of the inputted data by checking for an empty input and checking if the city exists
 function searchBtnClick(){
+    //check if there is a fetch still being completed
     let cityName = $('#searchInput').val()
 
     if(cityName == ""){
@@ -23,8 +25,8 @@ function searchBtnClick(){
     }
 
     coordinatesFetch(cityName)
-        .then(response =>{
-            if(!response.ok){
+        .then(data =>{
+            if(data[0] == null){
                 let error = $('<h4>').text('City does not exist').css('color', 'red').addClass('errorText')
                 $('#searchBar').append(error);
                 setTimeout(function(){
@@ -33,6 +35,13 @@ function searchBtnClick(){
                 return;
             }
             runSearch();
+            return;
+        })
+        .catch(error => {
+            console.error("Error", error)
+        })
+        .finally(() =>{
+            $(this).attr('data-fetch', false);
         })
     
 }
@@ -52,9 +61,7 @@ function runSearch(){
     
     //clear all previous searches before re rendering
     $('#previousSearches').empty();
-
     loadPreviousSearches();
-    $('#mainContainer').empty();
     loadMainBoard();
 }
 
@@ -118,9 +125,16 @@ function loadPreviousSearchesData(){
 
 //Remove active class from all list items and add new active class to selection
 function changeActive(event){
+    if(dataFetching == true){
+        console.log('Please wait for fetch to complete');
+        return;
+    }
+    $('#spinLoad').css('display', 'inline');
+    $('#currentWeatherMain').css('display', 'none');
+    $('#fiveDayContainer').css('display', 'none');
+    dataFetching = true;
     let anchorBoxes = $('a');
     for(let i = 0; i < anchorBoxes.length; i++){
-        $(anchorBoxes[i]).off('click');
         if($(anchorBoxes[i]).hasClass("active")){
             $(anchorBoxes[i]).removeClass('active');
         }
@@ -128,105 +142,73 @@ function changeActive(event){
 
     let clickedBox = $(event.target).closest('a');
     $(clickedBox).addClass('active');
-
-    $('#mainContainer').empty();
     loadMainBoard();
 }
 
+//Load the main staging area for today's weather and five day forecast
 function loadMainBoard(){
+    
+    
+
     let currentSearch = $('.active').find('h5').text();
-    console.log(currentSearch);
     let mainContainer = $('#mainContainer');
+
+    //Load today's weather 
+    $('#mainHeading').text(currentSearch).css("color", "white")    
 
     weatherDataFetch(currentSearch, "current")
         .then(data =>{
-        console.log(data)
-        //Load today's weather 
-        let mainHeading = $('<h2>').text(currentSearch).css("color", "white");
-        mainContainer.append(mainHeading);
-
-        let mainCard = $('<div>').addClass('card text-bg-dark');
-        let headerCard = $('<div>').addClass('card-header');
-        let bodyCard = $('<div>').addClass('card-body row');
-        let mainTemps = $('<div>').addClass('col-6')
-        let otherInfo = $('<div>').addClass('col-6')
-
-        mainCard.append(headerCard, bodyCard);
-
-        //Add icon
-        let iconDiv = $('<div>').attr('id', 'icon');
-        let iconUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-        let iconImg = $('<img>').attr('src', iconUrl).attr('alt', "weather icon").attr('height', "100px");
-        iconDiv.append(iconImg);
-        bodyCard.append(iconDiv);
-        //Add weather info
-        let smallHeading = $('<h3>').addClass('card-title').text("Today's weather in " + currentSearch);
-        let currentTemperature = $('<h5>').text("The current temperature is: " + data.main.temp + "°C")
-        let currentWind = $('<h5>').text("Wind: " + data.wind.speed + " km/h");
-        let currentHumidity = $('<h5>').text("Humidity: " + data.main.humidity + " g.m-3");
-        let currentFeelsLike = $('<h5>').text("Feels like: " + data.main.feels_like + "°C");
-        let maxTemp = $('<h5>').text("Max: " + data.main.temp_max + "°C");
-        let minTemp = $('<h5>').text("Min: " + data.main.temp_min + "°C");
-
-        mainTemps.append(currentTemperature, currentFeelsLike, minTemp, maxTemp);
-        otherInfo.append(currentWind, currentHumidity)
-
-        headerCard.append(smallHeading);
-        bodyCard.append(mainTemps, otherInfo);
-        mainContainer.append(mainCard)
+            //Add icon
+            
+            let iconUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+            $('#currentIcon').attr('src', iconUrl).attr('alt', "weather Icon").attr('height', "100px");
+                //Add weather info
+            $('#mainTitle').text(currentSearch);
+            $('#currentTemp').text(data.main.temp + "°C");
+            $('#currentWind').text(data.wind.speed + " km/h")
+            $('#currentHumidity').text(data.main.humidity + " g.m-3")
+            $('#currentMaxTemp').text(data.main.temp_max + "°C");
+            $('#currentMinTemp').text(data.main.temp_min + "°C");
+            $('#currentFeelsLike').text(data.main.feels_like + "°C")
         })
         .catch(error =>{
             console.error("Error", error)
         })
+        .finally(()=>{
+            $('#currentWeatherMain').css('display', 'inline');
+            dataFetching = false;
+        })
 
     weatherDataFetch(currentSearch, "fiveDay")
         .then(data =>{
-        console.log(data)
             //Load 5 day forecast 
-        let fiveDayHeader = $('<h3>').text("5 Day Forecast:").css('color', 'white').addClass(' mt-4');
-        mainContainer.append(fiveDayHeader);
-
-        for(let i = 4; i < data.list.length; i = i + 8){
+        console.log(data);
+        for(let j = 4; j < data.list.length; j = j + 8){
+        }
+        let timeStamps = [3 ,11, 19, 27, 35];
+        for(let i = 0; i < 5; i++){
+            let iconUrl = "http://openweathermap.org/img/w/" + data.list[timeStamps[i]].weather[0].icon + ".png";
             let date = data.list[i].dt;
-            console.log();
 
-            
-            let mainForecastCard = $('<div>').addClass('card  col-lg-2 m-3 text-bg-warning col-sm-10 col-md-10');
-            let headerForecastCard = $('<div>').addClass('card-header');
-            let bodyForecastCard = $('<div>').addClass('card-body');
-
-            //Add Icon at top of card
-            let iconDiv = $('<div>').attr('id', 'icon');
-            let iconUrl = "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png";
-            let iconImg = $('<img>').attr('src', iconUrl).attr('alt', "weather icon");
-            iconDiv.append(iconImg);
-            bodyForecastCard.append(iconDiv);
-
-            mainForecastCard.append(headerForecastCard, bodyForecastCard);
-
-            let smallForecastHeading = $('<h5>').addClass('card-title').text(dayjs.unix(date).format("dddd, DD/MM/YYYY"));
-            let smallForecastTemp = $('<p>').text("Temperature: " + data.list[i].main.temp + "°C");
-            let smallForecastWind = $('<p>').text("Wind speed: " + data.list[i].wind.speed + " km/h");
-            let smallForecastHumidity = $('<p>').text("Humidity: " + data.list[i].main.humidity + " g.m-3");
-
-            headerForecastCard.append(smallForecastHeading);
-            bodyForecastCard.append(smallForecastTemp, smallForecastWind, smallForecastHumidity);
-
-
-            mainContainer.append(mainForecastCard);
+            $('#forecast-' + i + "-icon").attr('src', iconUrl);
+            $('#forecast-' + i + "-title").text(dayjs.unix(date).format("dddd, DD/MM/YYYY"));
+            $('#forecast-' + i + "-temp").text("Temperature: " + data.list[timeStamps[i]].main.temp + "°C");
+            $('#forecast-' + i + "-humidity").text("Humidity: " + data.list[timeStamps[i]].main.humidity + " g.m-3");
+            $('#forecast-' + i + "-wind").text("Wind speed: " + data.list[timeStamps[i]].wind.speed + " km/h");
         }
         })
         .catch(error => {
             console.error("Error", error)
         })
 
-    
-
-
+        .finally(()=>{
+            $('#fiveDayContainer').css('display', 'inline');
+            $('#spinLoad').css('display', 'none');
+            dataFetching = false;
+        })
 }
 
-
-
+//Given coordinates, fetch the necessary weather data depending on requested timeframe either today or five day forecast
 function weatherDataFetch(cityName, day){
 
     return coordinatesFetch(cityName)
@@ -245,6 +227,8 @@ function weatherDataFetch(cityName, day){
                     return response.json();
                 })
                 .then(weatherData =>{
+
+                    
                     return weatherData;
                 })
                 .catch (error =>{
@@ -278,6 +262,8 @@ function weatherDataFetch(cityName, day){
     
 }
 
+
+//Fetch the name of the city 
 function coordinatesFetch(cityName){
     let apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=5&appid=6b83faa0314e5970068d0ef9b2e007ee";
 

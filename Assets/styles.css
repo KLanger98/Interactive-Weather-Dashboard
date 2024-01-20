@@ -22,3 +22,11 @@ body{
     background-color: #00296B;
     color: white;
 }
+
+h3{
+    color: white;
+}
+
+#spinLoad{
+    display: none;
+}

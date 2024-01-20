@@ -26,7 +26,104 @@
         <div class="row">
             <div class="col-md-2 col-sm-10 ms-8 list-group" id="previousSearches">
             </div>
-            <div class="col-md-10 col-sm-11 row" id="mainContainer"></div>
+            <div class="col-md-10 col-sm-11 row" id="mainContainer">
+                <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status" id="spinLoad">
+                    <span class="sr-only"></span>
+                </div>
+                <div id="currentWeatherMain" class="card text-bg-dark">
+                    <h2 id="mainHeading"></h2>
+                    <div id="currentHeader" class="card-header">
+                        <h3 class="card-title">Today's weather in <span id="mainTitle"></span></h3>
+                    </div>
+                    <div id="currentBody" class="card-body row">
+                        <div id="iconDiv">
+                            <img id="currentIcon">
+                        </div>
+                        <div id="mainTemps" class="col-6">
+                            <h5>The current temperature is <span id="currentTemp"></span></h5>
+                            <h5>Max: <span id="currentMaxTemp"></span></h5>
+                            <h5>Min: <span id="currentMinTemp"></span></h5>
+                            <h5>Feels Like: <span id="currentFeelsLike"></span></h5>
+                        </div>
+                        <div id="otherInfo" class="col-6">
+                            <h5>Wind: <span id="currentWind"></span></h5>
+                            <h5>Humidity: <span id="currentHumidity"></span></h5>
+                        </div>
+                    </div>
+                </div>
+                <div id="fiveDayContainer">
+                    <h3 class="mt-3">5 Day Forecast</h3>
+                    <div class="row">
+                        <div class="card  col-lg-2 m-3 text-bg-warning col-sm-10 col-md-10'" id="forecast-0">
+                            <div class="card-header" id="forecast-0-header">
+                                <h5 class="card-title" id="forecast-0-title"></h5>
+                            </div>
+                            <div class="card-body" id="forecast-0-body">
+                                <div>
+                                    <img id="forecast-0-icon" alt="Weather Icon">
+                                </div>
+                                <p id="forecast-0-temp">Temperature</p>
+                                <p id="forecast-0-wind">Wind Speed: </p>
+                                <p id="forecast-0-humidity">Temperature</p>
+                            </div>
+                        </div>
+                        <div class="card  col-lg-2 m-3 text-bg-warning col-sm-10 col-md-10'" id="forecast-1">
+                            <div class="card-header" id="forecast-1-header">
+                                <h5 class="card-title" id="forecast-1-title"></h5>
+                            </div>
+                            <div class="card-body" id="forecast-1-body">
+                                <div>
+                                    <img id="forecast-1-icon" alt="Weather Icon">
+                                </div>
+                                <p id="forecast-1-temp">Temperature</p>
+                                <p id="forecast-1-wind">Wind Speed: </p>
+                                <p id="forecast-1-humidity">Temperature</p>
+                            </div>
+                        </div>
+                        <div class="card  col-lg-2 m-3 text-bg-warning col-sm-10 col-md-10'" id="forecast-2">
+                            <div class="card-header" id="forecast-2-header">
+                                <h5 class="card-title" id="forecast-2-title"></h5>
+                            </div>
+                            <div class="card-body" id="forecast-2-body">
+                                <div>
+                                    <img id="forecast-2-icon" alt="Weather Icon">
+                                </div>
+                                <p id="forecast-2-temp">Temperature</p>
+                                <p id="forecast-2-wind">Wind Speed: </p>
+                                <p id="forecast-2-humidity">Temperature</p>
+                            </div>
+                        </div>
+                        <div class="card  col-lg-2 m-3 text-bg-warning col-sm-10 col-md-10'" id="forecast-3">
+                            <div class="card-header" id="forecast-3-header">
+                                <h5 class="card-title" id="forecast-3-title"></h5>
+                            </div>
+                            <div class="card-body" id="forecast-3-body">
+                                <div>
+                                    <img id="forecast-3-icon" alt="Weather Icon">
+                                </div>
+                                <p id="forecast-3-temp">Temperature</p>
+                                <p id="forecast-3-wind">Wind Speed: </p>
+                                <p id="forecast-3-humidity">Temperature</p>
+                            </div>
+                        </div>
+                        <div class="card  col-lg-2 m-3 text-bg-warning col-sm-10 col-md-10'" id="forecast-4">
+                            <div class="card-header" id="forecast-4-header">
+                                <h5 class="card-title" id="forecast-4-title"></h5>
+                            </div>
+                            <div class="card-body" id="forecast-4-body">
+                                <div>
+                                    <img id="forecast-4-icon" alt="Weather Icon">
+                                </div>
+                                <p id="forecast-4-temp">Temperature</p>
+                                <p id="forecast-4-wind">Wind Speed: </p>
+                                <p id="forecast-4-humidity">Temperature</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
         </div>
     </div>
     

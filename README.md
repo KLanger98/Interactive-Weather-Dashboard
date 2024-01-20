@@ -12,9 +12,17 @@ To use this website follow the live link provided above.
 
 You will be presented with a dashboard that will respond to your screen size. The dashboard will already load several 'previous calls' and load the location at the top of the list's Current weather and 5 day forecast.
 
+![Image of page once it is loaded](./Assets/Screenshots/landing.png)
+
 When you click a previous search, it will be highlighted and the current temperature and 5 day forecast sections will reload with the selected locations data. 
 
+![Demonstration of loading a previous search](./Assets/Screenshots/previousSearchSelected.png)
+
 By entering a city name in the search bar and pressing enter or 'Search' your search will be added to the previous searches list and the current weather and 5 day forecast will be updated to reflect the weather of your desired city. 
+
+![Demonstration of loading a previous search](./Assets/Screenshots/search-demo.png)
+
+If you enter an incorrectly spelt city or do not enter any text the search box will prevent the execution of code and let the user know what has occurred.
 
 ## Credits
 Bootstrap:
