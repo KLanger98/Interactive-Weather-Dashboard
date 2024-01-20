@@ -160,7 +160,7 @@ function loadMainBoard(){
         .then(data =>{
             //Add icon
             
-            let iconUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+            let iconUrl = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
             $('#currentIcon').attr('src', iconUrl).attr('alt', "weather Icon").attr('height', "100px");
                 //Add weather info
             $('#mainTitle').text(currentSearch);
