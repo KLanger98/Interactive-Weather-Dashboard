@@ -1,4 +1,5 @@
 const weatherAPI = "6b83faa0314e5970068d0ef9b2e007ee"
+//Variable used to track if data is still being fetched
 let dataFetching = false;
 
 
@@ -23,7 +24,7 @@ function searchBtnClick(){
         }, 4000)
         return;
     }
-
+    //Fetch coordinates to see if city exists
     coordinatesFetch(cityName)
         .then(data =>{
             if(data[0] == null){
@@ -34,6 +35,7 @@ function searchBtnClick(){
                 }, 4000)
                 return;
             }
+            console.log(data)
             runSearch();
             return;
         })
@@ -123,7 +125,7 @@ function loadPreviousSearchesData(){
     })
 }
 
-//Remove active class from all list items and add new active class to selection
+//Remove active class from all list items and add new active class to click selection
 function changeActive(event){
     if(dataFetching == true){
         console.log('Please wait for fetch to complete');
@@ -147,11 +149,7 @@ function changeActive(event){
 
 //Load the main staging area for today's weather and five day forecast
 function loadMainBoard(){
-    
-    
-
     let currentSearch = $('.active').find('h5').text();
-    let mainContainer = $('#mainContainer');
 
     //Load today's weather 
     $('#mainHeading').text(currentSearch).css("color", "white")    
@@ -263,7 +261,7 @@ function weatherDataFetch(cityName, day){
 }
 
 
-//Fetch the name of the city 
+//Fetch the geocode for the city given its name
 function coordinatesFetch(cityName){
     let apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=5&appid=6b83faa0314e5970068d0ef9b2e007ee";
 
@@ -284,5 +282,5 @@ function coordinatesFetch(cityName){
     
 }
 
-loadPreviousSearches()
+loadPreviousSearches();
 loadMainBoard();
